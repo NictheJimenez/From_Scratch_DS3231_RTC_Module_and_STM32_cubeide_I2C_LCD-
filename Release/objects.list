@@ -1,0 +1,5 @@
+"Src/001_led_toggle.o"
+"Src/002_led_button.o"
+"Src/syscalls.o"
+"Src/sysmem.o"
+"Startup/startup_stm32l475vgtx.o"

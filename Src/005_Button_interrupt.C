@@ -1,0 +1,87 @@
+/*
+ *                                                            005_Button_interrupt.C
+ */
+
+
+#include <string.h>
+#include "stm32l475xx.h"
+
+#define LOW                                 0
+#define BTN_PRESSED                         LOW
+
+void delay(void);
+
+
+int main(void){
+
+	GPIO_Handle_t GpioLedE, GpioLedI, GpioBtnE;											/*  (GpioLedE => GPIO Led External from the board),*/
+	memset(&GpioLedE,0,sizeof(GpioLedE));												/*  (GpioLedI => GPIO Led Internal from the board),*/
+	memset(&GpioLedI,0,sizeof(GpioLedI));												/*  (GpioBtnE => GPIO Button External from the board)*/
+	memset(&GpioBtnE,0,sizeof(GpioBtnE));
+	/************************External Led => GpioLedE*************************/
+	/* (Pin Name => PB2) (Signal or Label => ARD.D8)
+	 *( Feature / Comment => GPIO_Output) (Connector => CN1) (Pin number => 1)
+	 *************************************************************************/
+	GpioLedE.pGPIOx = GPIOB;
+
+	GpioLedE.GPIO_PinConf.GPIO_PinNumber =GPIO_PIN_NO_2;
+	GpioLedE.GPIO_PinConf.GPIO_PinMode = GPIO_MODE_OUT;
+	GpioLedE.GPIO_PinConf.GPIO_PinOPType = GPIO_OP_TYPE_OD;
+	GpioLedE.GPIO_PinConf.GPIO_PinSpeed = GPIO_SPEED_HIGH;
+	GpioLedE.GPIO_PinConf.GPIO_PinPuPdControl = GPIO_NO_PUPD;
+
+
+	GPIO_PeriClockControl(GPIOB, ENABLE);
+	GPIO_Init(&GpioLedE);
+	/*************************Internal Led => GpioLedI*************************/
+	/* (Pin Name => PB14) (Signal or Label => LED2)
+	 *( Feature / Comment => GPIO_Output) (Connector => NA) (Pin number => NA)
+	 *************************************************************************/
+	GpioLedI.pGPIOx = GPIOB;
+
+	GpioLedI.GPIO_PinConf.GPIO_PinNumber =GPIO_PIN_NO_14;
+	GpioLedI.GPIO_PinConf.GPIO_PinMode = GPIO_MODE_OUT;
+	GpioLedI.GPIO_PinConf.GPIO_PinOPType = GPIO_OP_TYPE_PP;
+	GpioLedI.GPIO_PinConf.GPIO_PinSpeed = GPIO_SPEED_FAST;
+	GpioLedI.GPIO_PinConf.GPIO_PinPuPdControl = GPIO_NO_PUPD;
+
+	GPIO_PeriClockControl(GPIOB, ENABLE);
+	GPIO_Init(&GpioLedI);
+	/**********************External Button => GpioBtnE*************************/
+	/* (Pin Name => PD14) (Signal or Label =>  ARD.D2-INT0_EXTI14)
+	 *( Feature / Comment => GPIO_EXTI14) (Connector => NA) (Pin number => NA)
+	 *************************************************************************/
+	GpioBtnE.pGPIOx = GPIOD;
+
+	GpioBtnE.GPIO_PinConf.GPIO_PinNumber =GPIO_PIN_NO_14;
+	GpioBtnE.GPIO_PinConf.GPIO_PinMode = GPIO_MODE_IT_FT;
+	//GpioBtnE.GPIO_PinConf.GPIO_PinOPType = GPIO_OP_TYPE_PP;                 NA
+	//GpioBtnE.GPIO_PinConf.GPIO_PinSpeed = GPIO_SPEED_FAST;                  NA
+	GpioBtnE.GPIO_PinConf.GPIO_PinPuPdControl = GPIO_PU;
+
+	GPIO_PeriClockControl(GPIOD, ENABLE);
+	GPIO_Init(&GpioBtnE);
+	GPIO_WriteToOuputPin(GPIOD, GPIO_PIN_NO_14, GPIO_PIN_RESET);
+	/***IRQ Configurations for External Button => GpioBtnE********************/
+	/* (Pin Name => PD14) (Signal or Label =>  ARD.D2-INT0_EXTI14)
+	 *( Feature / Comment => GPIO_EXTI14) (Connector => NA) (Pin number => NA)
+	 *************************************************************************/
+	GPIO_IRQInterruptConfig(IRQ_NO_EXTI15_10, ENABLE);
+	GPIO_IRQPriorityConfig(IRQ_NO_EXTI15_10, NVIC_IRQ_PRI14);
+
+
+    while(1);
+
+	//return 0;
+}
+void EXTI15_10_IRQHandler(void){
+	GPIO_IRQHandling(GPIO_PIN_NO_14);       //clear the pending event from exti line
+  //  if((GPIO_ReadFromInputPin(GPIOD, GPIO_PIN_NO_14)) == BTN_PRESSED){
+	    delay();
+		GPIO_ToggleOutputPin(GPIOB, GPIO_PIN_NO_2);
+		GPIO_ToggleOutputPin(GPIOB, GPIO_PIN_NO_14);
+  //  }
+}
+void delay(void){
+	for(uint32_t i = 0; i < 500000 / 2; i++);
+}
