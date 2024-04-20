@@ -1,0 +1,12 @@
+../bsp/ds3231.c:16:13:mdelay	2
+../bsp/ds3231.c:22:9:ds3231_init	1
+../bsp/ds3231.c:48:6:ds3231_set_current_time	3
+../bsp/ds3231.c:67:6:ds3231_get_current_time	2
+../bsp/ds3231.c:92:6:ds3231_set_current_date	1
+../bsp/ds3231.c:100:6:ds3231_get_current_date	1
+../bsp/ds3231.c:108:13:ds3231_i2c_pin_config	1
+../bsp/ds3231.c:146:13:ds3231_i2c_config	1
+../bsp/ds3231.c:154:13:ds3231_write	1
+../bsp/ds3231.c:163:16:ds3231_read	1
+../bsp/ds3231.c:184:16:binary_to_bcd	2
+../bsp/ds3231.c:207:16:bcd_to_binary	1

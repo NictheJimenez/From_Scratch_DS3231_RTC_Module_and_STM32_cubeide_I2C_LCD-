@@ -86,13 +86,14 @@ void I2C_DeInit(I2C_RegDef_t* pI2Cx);
 /*
  * Master Data Send and Receive
  */
-void I2C_MasterSendData(I2C_Handle_t *pI2CHandle, uint8_t *pTxBuffer, uint8_t Len, uint8_t SlaveAddr,uint8_t RorWTransfer, uint8_t AutoendEnorDi, uint8_t RestartdEnorDi);
-void I2C_MasterReceiveData(I2C_Handle_t *pI2CHandle, uint8_t *pRxBuffer, uint8_t Len, uint8_t SlaveAddr,uint8_t RorWTransfer);
+void I2C_MasterSendData(I2C_Handle_t *pI2CHandle, uint8_t *pTxBuffer, uint8_t Len, uint8_t SlaveAddr, uint8_t AutoendEnorDi, uint8_t RestartdEnorDi);
+void I2C_MasterReceiveData(I2C_Handle_t *pI2CHandle, uint8_t *pRxBuffer, uint8_t Len, uint8_t SlaveAddr, uint8_t AutoendEnorDi, uint8_t RestartdEnorDi);
+void I2C_MasterSendDataaux(I2C_Handle_t *pI2CHandle, uint8_t *pTxBuffer, uint8_t Len, uint8_t SlaveAddr,uint8_t RorWTransfer);
 /*
  * Data Send and Receive
  */
-uint8_t I2C_MasterSendDataIT(I2C_Handle_t *pI2CHandle, uint8_t *pTxBuffer, uint8_t Len, uint8_t SlaveAddr,uint8_t RorWTransfer, uint8_t Sr);
-uint8_t I2C_MasterReceiveDataIT(I2C_Handle_t *pI2CHandle, uint8_t *pRxBuffer, uint8_t Len, uint8_t SlaveAddr,uint8_t RorWTransfer, uint8_t Sr);
+uint8_t I2C_MasterSendDataIT(I2C_Handle_t *pI2CHandle, uint8_t *pTxBuffer, uint8_t Len, uint8_t SlaveAddr, uint8_t Sr);
+uint8_t I2C_MasterReceiveDataIT(I2C_Handle_t *pI2CHandle, uint8_t *pRxBuffer, uint8_t Len, uint8_t SlaveAddr, uint8_t Sr);
 /*
  * Slave receive/ request data
  */
@@ -117,11 +118,19 @@ void I2C_ManageAcking(I2C_RegDef_t* pI2Cx,uint8_t EnorDi);
 void I2C_ApplicationEventCallback(I2C_Handle_t * pI2CHandle,uint8_t I2C_EventApp);
 
 //OTHERS
+#define I2C_EV_RX_CMPLT                      0
 #define I2C_EV_TX_CMPLT                      1
+#define I2C_EV_TCR_CMPLT                     2
+
 #define I2C_WRITE_TRANSFER_MM                0
 #define I2C_READ_TRANSFER_MM                 1
 #define I2C_READ_TRANSFER_SM                 0
 #define I2C_WRITE_TRANSFER_SM                1
 #define I2C_AUTOEND_DISABLE_MM               0
 #define I2C_AUTOEND_ENABLE_MM                1
+#define I2C_RESTART_DISABLE_MM               0
+#define I2C_RESTART_ENABLE_MM                1
+#define I2C_RELOAD_DISABLE_MM                0
+#define I2C_RELOAD_ENABLE_MM                 1
+
 #endif /* INC_STM32L475XX_I2C_DRIVERS_H_ */

@@ -122,6 +122,7 @@ while(Len >0){
 	}
 }
 void SPI_ReciveData(SPI_RegDef_t* pSPIx, uint8_t * pRxBuffer, uint32_t Len){
+
 	while(Len >0){
 		//1. wait until RxNE is set
 		while(!(SPI_GetFlagStatus(pSPIx,SPI_RXNE_FLAG) == FLAG_RESET));

@@ -1,8 +1,5 @@
 /*
  * stm32l475xx_spi_driver.h
- *
- *  Created on: Jun 11, 2022
- *      Author: nicth
  */
 
 #ifndef INC_STM32L475XX_SPI_DRIVER_H_

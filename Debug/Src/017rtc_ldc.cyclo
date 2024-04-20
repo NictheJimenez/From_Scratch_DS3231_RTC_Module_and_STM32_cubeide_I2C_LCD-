@@ -1,0 +1,11 @@
+../Src/017rtc_ldc.c:47:6:RCC_config	1
+../Src/017rtc_ldc.c:60:6:I2C1_Inits	1
+../Src/017rtc_ldc.c:71:6:GPIO_LCDInit	1
+../Src/017rtc_ldc.c:139:6:init_systick_timer	1
+../Src/017rtc_ldc.c:162:8:get_day_of_week	1
+../Src/017rtc_ldc.c:168:6:number_to_string	4
+../Src/017rtc_ldc.c:181:7:time_to_string	1
+../Src/017rtc_ldc.c:197:7:date_to_string	1
+../Src/017rtc_ldc.c:211:13:mdelay	2
+../Src/017rtc_ldc.c:216:5:main	1
+../Src/017rtc_ldc.c:282:7:SysTick_Handler	2
